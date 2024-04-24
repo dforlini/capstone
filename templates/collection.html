@@ -9,10 +9,14 @@
     {% if collection_items %}
         {% for item in collection_items %}
             <div class="card">
+               {% if item.card and item.card.images %} 
                 <img src="{{ item.card.images.small }}" alt="{{ item.card.name }}" class="card-image">
                 <h3>{{ item.card.name }}</h3>
                 <p>Type: {{ item.card.types[0] if item.card.types else 'N/A' }}</p>
                 <p>Rarity: {{ item.card.rarity if item.card.rarity else 'Common' }}</p>
+               {% else %}
+                <p>Card details not available or incomplete</p>
+               {% endif %}  
             </div>
         {% endfor %}
     {% else %}
