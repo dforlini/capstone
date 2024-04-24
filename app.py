@@ -1,10 +1,13 @@
 from flask import Flask, render_template, request, redirect, session, url_for, flash
 from dotenv import load_dotenv
 import os
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from extentions import db, bcrypt
 from pokemon_api import get_pokemon_cards
 from utils import login_required
 from models import User, CollectionItem, Deck, DeckItem
+from sqlalchemy.orm import joinedload
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
@@ -12,6 +15,9 @@ app.config['SECRET_KEY'] = 'ANGELA'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 bcrypt.init_app(app)
+migrate = Migrate(app, db)
+
+
 
 
 load_dotenv()
@@ -48,6 +54,7 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and user.check_password(password):
             session['username'] = username
+            session['user_id'] = user.id
             return redirect(url_for('main'))
         else:
             flash('Invalid username or password')
@@ -91,8 +98,12 @@ def add_to_collection(card_id):
 @app.route('/collection')
 @login_required
 def view_collection():
+    print("Session keys:", session.keys()) #debug show all keys in session
+    if 'user_id' not in session:
+        flash('User not logged in')
+        return redirect(url_for('login'))
     user_id = session['user_id']
-    collection_items = CollectionItem.query.filter_by(user_id=user_id).all()
+    collection_items = CollectionItem.query.options(joinedload(CollectionItem.card)).filter_by(user_id=user_id).all()
     # Fetch card details from the Pokémon API or cache based on the card IDs in collection_items
     return render_template('collection.html', collection_items=collection_items)
 
@@ -107,7 +118,7 @@ def deckbuilder():
         db.session.commit()
         flash('New deck created!')
         return redirect(url_for('view_decks'))
-    return render_template('deckbuilder.html')
+    return render_template('deck_builder.html')
 
 @app.route('/decks')
 @login_required

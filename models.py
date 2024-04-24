@@ -17,9 +17,17 @@ class User(db.Model):
         return bcrypt.check_password_hash(self.password_hash, password)
     
 class CollectionItem(db.Model):
+    __tablename__ = 'collection_items'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    card_id = db.Column(db.String(120), nullable=False)  
+    card_id = db.Column(db.String(120), db.ForeignKey('cards.id'), nullable=False) 
+    card = db.relationship('Card', backref='collection_items') 
+
+class Card(db.Model):
+    __tablename__ = 'cards'
+    id = db.Column(db.String(120), primary_key=True)
+    name = db.Column(db.String(255))
+    images = db.Column(db.JSON)    
 
 class Deck(db.Model):
     id = db.Column(db.Integer, primary_key=True)

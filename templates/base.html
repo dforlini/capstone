@@ -19,6 +19,14 @@
                 </span>    
                 <a href="{{ url_for('logout') }}" style="float: right;">Logout</a>
             {% endif %}
+            {% if request.path != '/main' and request.path != '/login' %}
+                <a href="{{ url_for('view_collection') }}" style="float: left; margin-left: 20px;">My Collection</a>
+                <a href="{{ url_for('deckbuilder') }}" style="float: left; margin-left: 20px;">Deck Builder</a>
+            {% endif %} 
+            {% if request.path != '/main' and request.path != '/pokemon_cards' and request.path !='/login' %}
+                <a href="{{ url_for('pokemon_cards') }}" style="float:left; margin-left:20px;">Search</a>
+            {% endif %}    
+               
         </nav>
         {% endif %}
     </header>

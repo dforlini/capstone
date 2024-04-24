@@ -7,9 +7,9 @@
     <source src="{{ url_for('static', filename= 'videos/background5.mp4') }}" type="video/mp4">
 </video>
 
-<h1>Pokémon Cards</h1>
+<h1 class="page-title">Pokémon Cards</h1>
 
-<p>Search Instructions: please use the following format. name:charizard. name:charizard subtypes:mega. subtypes:mega -types:water   </p>
+<p class="instructions">Search Instructions: please use the following format. name:charizard. name:charizard subtypes:mega. subtypes:mega -types:water   </p>
 <form method="GET" action="{{ url_for('pokemon_cards') }}">
     <input type="text" name="query" placeholder="example search: name:charizard" value="{{ request.args.get('query', '') }}" >
     <button type="submit">Search</button>
@@ -22,6 +22,10 @@
             <img src="{{ card.images.small }}" alt="{{ card.name }}">
             <p>Type: {{ card.types[0] if card.types else 'N/A' }}</p>
             <p>Rarity: {{ card.rarity if card.rarity else 'Common' }}</p>
+            <form action="{{ url_for('add_to_collection', card_id=card.id) }}" method="POST">
+                <input type="hidden" name="card_id" value="{{ card.id }}">
+                <button type="submit">Add to Collection</button>
+            </form>
         </div>
     {% else %}
         <p>No cards found.</p>
