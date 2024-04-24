@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}My Collection{% endblock %}
+
+{% block content %}
+<h1>My Pokémon Card Collection</h1>
+
+<div class="collection-container">
+    {% if collection_items %}
+        {% for item in collection_items %}
+            <div class="card">
+                <img src="{{ item.card.images.small }}" alt="{{ item.card.name }}" class="card-image">
+                <h3>{{ item.card.name }}</h3>
+                <p>Type: {{ item.card.types[0] if item.card.types else 'N/A' }}</p>
+                <p>Rarity: {{ item.card.rarity if item.card.rarity else 'Common' }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>You currently have no cards in your collection.</p>
+    {% endif %}
+</div>
+{% endblock %}

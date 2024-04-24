@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Pokémon Cards{% endblock %}
+
+{% block content %}
+<video autoplay loop muted class="video-background">
+    <source src="{{ url_for('static', filename= 'videos/background5.mp4') }}" type="video/mp4">
+</video>
+
+<h1>Pokémon Cards</h1>
+
+<p>Search Instructions: please use the following format. name:charizard. name:charizard subtypes:mega. subtypes:mega -types:water   </p>
+<form method="GET" action="{{ url_for('pokemon_cards') }}">
+    <input type="text" name="query" placeholder="example search: name:charizard" value="{{ request.args.get('query', '') }}" >
+    <button type="submit">Search</button>
+</form>
+
+<div class="cards-container">
+    {% for card in cards %}
+        <div class="card">
+            <h2>{{ card.name }}</h2>
+            <img src="{{ card.images.small }}" alt="{{ card.name }}">
+            <p>Type: {{ card.types[0] if card.types else 'N/A' }}</p>
+            <p>Rarity: {{ card.rarity if card.rarity else 'Common' }}</p>
+        </div>
+    {% else %}
+        <p>No cards found.</p>
+    {% endfor %}
+</div>
+{% endblock %}

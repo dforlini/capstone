@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Main{% endblock %}
+
+{% block content %}
+<video autoplay loop muted class="video-background">
+    <source src="{{ url_for('static', filename= 'videos/background4.mp4') }}" type="video/mp4">
+</video>
+
+<div class="feature-container">
+    <a href="{{ url_for('pokemon_cards') }}" class="btn btn-primary">Search Pokémon Cards</a>
+    <a href="{{ url_for('view_collection') }}" class="btn btn-secondary">My Collection</a>
+    <a href="{{ url_for('deckbuilder') }}" class="btn btn-success">Deck Builder</a>
+   
+</div>
+{% endblock %}

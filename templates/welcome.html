@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Welcome to the Pokémon Card App!{% endblock %}
+
+{% block content %}
+<video autoplay loop muted class="video-background">
+    <source src="{{ url_for('static', filename= 'videos/background3.mp4') }}" type="video/mp4">
+</video>
+
+<div class="welcome-container">
+    <h1>Welcome to the Pokémon Card App!</h1>
+    <p>Discover, and collect your favorite Pokémon cards!</p>
+    <div>
+        <a href="{{ url_for('register') }}" class="btn">Sign up Now!</a>
+        <a href="{{ url_for('login') }}" class="btn">Login</a>
+    </div>
+</div>
+{% endblock %}

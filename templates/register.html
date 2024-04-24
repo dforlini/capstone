@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Please Register{% endblock %}
+
+{% block content %}
+<video autoplay loop muted class="video-background">
+    <source src="{{ url_for('static', filename= 'videos/background2.mp4') }}" type="video/mp4">
+</video>
+
+<div class="centered-container">
+    <div class="login-container">
+        <h2>Register</h2>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}    
+        </ul>
+    {% endif %}
+{% endwith %}
+    <form method="POST">
+        Username: <input type="text" name="username" required><br>
+        Password: <input type="password" name="password" required><br>
+        <input type="submit" value="Register">
+    </form>
+    </div>  
+</div>   
+{% endblock %}        
