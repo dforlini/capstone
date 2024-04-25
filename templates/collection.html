@@ -4,6 +4,15 @@
 
 {% block content %}
 <h1 class="page-title">My Pokémon Card Collection</h1>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flashes">
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
 
 <div class="collection-container">
     {% if collection_items %}
@@ -14,10 +23,9 @@
                 <h3>{{ item.card.name }}</h3>
                 <p>Type: {{ item.card.types[0] if item.card.types else 'N/A' }}</p>
                 <p>Rarity: {{ item.card.rarity if item.card.rarity else 'Common' }}</p>
-               {% else %}
-                <p>Card details not available or incomplete</p>
-               {% endif %}  
+               
             </div>
+            {% endif %}
         {% endfor %}
     {% else %}
         <p>You currently have no cards in your collection.</p>

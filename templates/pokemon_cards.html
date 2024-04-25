@@ -8,6 +8,15 @@
 </video>
 
 <h1 class="page-title">Pokémon Cards</h1>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flashes">
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
 
 <p class="instructions">Search Instructions: please use the following format. name:charizard. name:charizard subtypes:mega. subtypes:mega -types:water   </p>
 <form method="GET" action="{{ url_for('pokemon_cards') }}">

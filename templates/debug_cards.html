@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Debug Cards{% endblock %}
+
+{% block content %}
+<h1>All Cards in Database</h1>
+
+<div class="cards-container">
+    {% for card in cards %}
+        <div class="card">
+            <h2>{{ card.name }}</h2>
+            {% if card.images %}
+                <img src="{{ card.images.small }}" alt="Image of {{ card.name }}">
+            {% else %}
+                <p>No image available</p>
+            {% endif %}
+            <p>Type: {{ card.types[0] if card.types else 'N/A' }}</p>
+            <p>Rarity: {{ card.rarity if card.rarity else 'Common' }}</p>
+        </div>
+    {% else %}
+        <p>No cards found in the database.</p>
+    {% endfor %}
+</div>
+{% endblock %}
