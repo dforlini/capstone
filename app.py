@@ -17,13 +17,8 @@ db.init_app(app)
 bcrypt.init_app(app)
 migrate = Migrate(app, db)
 
-
-
-
 load_dotenv()
 api_key = os.getenv('POKEMON_TCG_API_KEY')
-
-
 
 @app.route('/')
 def welcome():
